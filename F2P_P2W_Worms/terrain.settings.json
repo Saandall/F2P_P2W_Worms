@@ -1,0 +1,19 @@
+{
+  "Width": 40,
+  "Height": 20,
+  "Seed": 20261125,
+  "AnchorCount": 16,
+  "Growth": {
+    "Iterations": 4,
+    "UpperRegionHeight": 0.45,
+    "UpperRegionGrowthChance": 0.5,
+    "SingleNeighborChance": 0.2,
+    "BottomSeedCount": 6,
+    "BottomChunkWidth": 0.4,
+    "BottomChunkHeight": 0.22
+  },
+  "Contours": {
+    "UpscaleFactor": 30,
+    "CornerOffset": 0.6
+  }
+}

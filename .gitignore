@@ -3,3 +3,4 @@ obj/
 bin/
 .WPFGame/bin/
 .WPFGame/obj/
+/Terrain.Checks/
