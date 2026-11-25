@@ -1,9 +1,9 @@
 namespace F2P_P2W_Worms.Terrain;
 
-// Создаёт общие углы со смещением и растеризует контуры в большую маску
+// Создаёт общие углы, сглаживает контуры и растеризует их в большую маску
 public static class TerrainContourBuilder
 {
-    // Выполняет пункты 9-11 с применением смещения из пункта 13 при расчёте углов
+    // Выполняет пункты 9-12 со смещением из пункта 13 при расчёте углов
     public static TerrainContourMap Build(bool[,] mask, TerrainContourSettings settings, Random random)
     {
         ArgumentNullException.ThrowIfNull(mask);
@@ -18,12 +18,28 @@ public static class TerrainContourBuilder
 
         foreach (var loop in PavlidisContourTracer.Trace(mask))
         {
-            GridPoint[] points = loop.Select(p => corners[p.X, p.Y]).ToArray();
+            GridPoint[] source = loop.Select(p => corners[p.X, p.Y]).ToArray();
+            ContourPoint[] curve = ChaikinSmoother.Smooth(source, settings.SmoothingIterations, settings.CutRatio);
+            GridPoint[] points = RoundToPixels(curve);
             contours.Add(new TerrainContour(points, SignedArea(loop) < 0));
             for (int i = 0; i < points.Length; i++)
                 TerrainGenerator.RasterizeLine(outline, points[i], points[(i + 1) % points.Length]);
         }
         return new TerrainContourMap(corners, contours.ToArray(), outline);
+    }
+
+    // Округляет только готовую кривую и удаляет соседние повторения пикселей
+    private static GridPoint[] RoundToPixels(IReadOnlyList<ContourPoint> curve)
+    {
+        var points = new List<GridPoint>(curve.Count);
+        foreach (var point in curve)
+        {
+            var rounded = new GridPoint((int)Math.Round(point.X, MidpointRounding.AwayFromZero),
+                (int)Math.Round(point.Y, MidpointRounding.AwayFromZero));
+            if (points.Count == 0 || points[^1] != rounded) points.Add(rounded);
+        }
+        if (points.Count > 1 && points[^1] == points[0]) points.RemoveAt(points.Count - 1);
+        return points.ToArray();
     }
 
     // Вычисляет каждую общую вершину один раз с безопасным целочисленным сдвигом
