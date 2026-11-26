@@ -3,7 +3,7 @@ namespace F2P_P2W_Worms.Terrain;
 // Создаёт общие углы, сглаживает контуры и растеризует их в большую маску
 public static class TerrainContourBuilder
 {
-    // Выполняет пункты 9-12 со смещением из пункта 13 при расчёте углов
+    // Рассчитывает смещённые углы, выделяет границы, сглаживает и рисует контуры
     public static TerrainContourMap Build(bool[,] mask, TerrainContourSettings settings, Random random)
     {
         ArgumentNullException.ThrowIfNull(mask);

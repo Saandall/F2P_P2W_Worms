@@ -6,7 +6,7 @@ using F2P_P2W_Worms.Terrain;
 
 namespace F2P_P2W_Worms.Presentation.Views;
 
-// Показывает большую маску земли и отладочные слои в обозначениях статьи
+// Показывает большую маску земли с отладочными слоями каркаса и сетки
 public sealed class TerrainDebugSurface : FrameworkElement
 {
     private static readonly Brush BackgroundBrush = FrozenBrush("#595959");
