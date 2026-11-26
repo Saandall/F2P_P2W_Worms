@@ -16,11 +16,11 @@ public sealed class TerrainGrowthSettings
     public double SingleNeighborChance { get; init; } = 0.2;
 
     // Количество различных стартовых клеток в предпоследней строке
-    public int BottomSeedCount { get; init; } = 6;
+    public int BottomSeedCount { get; init; } = 3;
 
     // Размеры одного нижнего блока относительно внутренней области сетки
-    public double BottomChunkWidth { get; init; } = 0.4;
-    public double BottomChunkHeight { get; init; } = 0.22;
+    public double BottomChunkWidth { get; init; } = 0.3;
+    public double BottomChunkHeight { get; init; } = 0.12;
 
     // Проверяет параметры до изменения маски
     internal void Validate(int width)

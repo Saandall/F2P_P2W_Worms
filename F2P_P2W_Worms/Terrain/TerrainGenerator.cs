@@ -1,6 +1,6 @@
 namespace F2P_P2W_Worms.Terrain;
 
-// Генерирует каркас и наращивает землю на малой сетке по статье Bamboy360
+// Генерирует каркас и наращивает землю на малой сетке
 public sealed class TerrainGenerator
 {
     // Создаёт карту по seed, без параметров роста возвращает только каркас
@@ -49,7 +49,8 @@ public sealed class TerrainGenerator
         foreach (var edge in edges) RasterizeLine(mask, points[edge.StartIndex], points[edge.EndIndex]);
         if (growth is not null) TerrainGrowth.Apply(mask, growth, random);
         var contourMap = contours is null ? null : TerrainContourBuilder.Build(mask, contours, random);
-        return new TerrainModel(seed, mask, points, edges, contourMap);
+        var filledMap = contourMap is null ? null : TerrainFill.Fill(contourMap);
+        return new TerrainModel(seed, mask, points, edges, contourMap, filledMap);
     }
 
     // Строит минимальное остовное дерево Прима по расстояниям между опорами

@@ -16,13 +16,15 @@ public sealed class TerrainModel
     public IReadOnlyList<TerrainEdge> Edges { get; }
     public int SolidCellCount { get; }
     public TerrainContourMap? ContourMap { get; }
+    public TerrainFillResult? FilledMap { get; }
 
     // Сохраняет результат генерации и подсчитывает заполненные клетки
     internal TerrainModel(int seed, bool[,] mask, GridPoint[] anchors, TerrainEdge[] edges,
-        TerrainContourMap? contourMap = null)
+        TerrainContourMap? contourMap = null, TerrainFillResult? filledMap = null)
     {
         Seed = seed;
         ContourMap = contourMap;
+        FilledMap = filledMap;
         solid = mask;
         Anchors = Array.AsReadOnly(anchors);
         Edges = Array.AsReadOnly(edges);

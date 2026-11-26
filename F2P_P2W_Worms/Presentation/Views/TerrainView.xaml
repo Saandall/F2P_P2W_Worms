@@ -2,5 +2,5 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:F2P_P2W_Worms.Presentation.Views">
-    <local:TerrainDebugSurface Terrain="{Binding Terrain.Value}"/>
+    <local:TerrainDebugSurface Frame="{Binding Frame.Value}"/>
 </UserControl>
